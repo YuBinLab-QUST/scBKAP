@@ -1,0 +1,12 @@
+library(Seurat)
+library(SC3)
+
+a<-readRDS("yan.rds")
+b<-get_processed_dataset(a)
+b <- CreateSeuratObject(b)
+b <- NormalizeData(b)
+b <- FindVariableFeatures(b)
+all.genes <- rownames(b)
+b <- ScaleData(b, features = all.genes)
+b <- RunPCA(b, features = VariableFeatures(object = b))
+b <- FindNeighbors(b,k.param=5)
